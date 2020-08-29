@@ -13,10 +13,10 @@ class RingBuffer:
             print("self.oldest is", self.oldest)
             self.data.pop(self.data[self.oldest])
             self.data.insert(self.oldest, item)
-            self.oldest += 1
-
-        if self.oldest == self.capacity:
-            self.oldest = 0
+            if self.oldest < self.max - 1:
+                self.oldest += 1
+            else:
+                self.oldest = 0
 
     def get(self):
         return self.data
