@@ -1,3 +1,6 @@
+from queue import Queue
+
+
 class Node:
     def __init__(self, value=None, next_node=None):
         self.value = value
@@ -11,6 +14,7 @@ class Node:
 
     def set_next(self, new_next):
         self.next_node = new_next
+
 
 class LinkedList:
     def __init__(self):
@@ -39,4 +43,24 @@ class LinkedList:
         return False
 
     def reverse_list(self, node, prev):
-        pass
+        container = Queue()
+        while node:
+            container.enqueue(node.value)
+        while container.size != 0:
+            llist = LinkedList()
+            if self.head is None:
+                value = container.dequeue()
+                self.head = Node(value)
+                llist.add_to_head(self.head)
+            elif self.head.get_next() is None:
+                value = container.dequeue()
+                node = Node(value)
+                llist.add_to_head(node)
+                self.head.set_next(node)
+                node = prev
+            else:
+                value = container.dequeue()
+                node = Node(value)
+                llist.add_to_head(node)
+                prev.set_next(node)
+                node = prev
